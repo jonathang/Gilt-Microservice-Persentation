@@ -57,9 +57,8 @@
 
 <!-- Takeaways -->
 <section>
-         <h2>Some of the lessons and challenges that we stlil face with
-             micro-service <br> architecture at GILT <br><br>
-             And how we use Scala to solve some of this issues
+         <h2>The lessons and challenges with<br>
+             micro-service  architecture <br> @ GILT <br><br>
              </h2>
 
     <aside class="notes">
@@ -79,13 +78,13 @@
     Flash Sales Business <br>
     Founded in 2007<br>
     Top 50 Internet-Retailer</br>
-    $750Mli in revenue </br>
-    18Mli members </br>
+    $750Mil in revenue </br>
+    18Mil members </br>
     //TODO numbers from black Friday
 
 </section>
 <section>
-<img width="480" height="360" src="img/gilt.png"/>
+<img src="img/gilt.png"/>
 </section>
 <section>
     <h2> Another way to look at Gilt</h2>
@@ -113,41 +112,40 @@
     </aside>
 </section>
 <section>
-    <h2> 2009 Architecture</h2>
-    <img width="480" height="360" src="img/monolith.jpg">
+    <img src="img/monolith.jpg">
 </section>
 <section>
     <h2> We were able to handle our traffic pretty well</h2>
     <img width="512" height="394" src="img/spike.jpg">
+    <aside class="notes">
+       scale was ok things worked <fine></fine>
+    </aside>
 </section>
 
 <section>
-    <h2>Things went well, traffic kept rising </h2>
-    <h2> And it was relatively simple to develop and move fast <br> while rendering the pages in real-time </h2>
-</section>
-
-<section>
-    <h2> Untli after about two years, it didn't  </h2>
+    <h2> Until Louboutin came to Gilt</h2>
     <img width="300" height="200" src="img/louboutin.jpg">
     <img width="200" height="200" src="img/louboutin2.jpg">
 </section>
 
 <section>
-    <h2> Some of the technology pain points <br> (As of 2009) </h2>
+    <h2> Technology pain points - 2009 </h2>
     <ul>
-        <li> The amount of traffic at the spike required us to launch 1,000s of ruby processes </li>
+        <li> Spike required to launch 1,000s of ruby processes </li>
         <li> Postgres was overloaded </li>
-        <li> Routing traffic between ruby processes is hard and was not efficiently solved then </li>
-        <li> Ruby 1.8.* - doesn't really support multi-threading, and the GC was not optimized </li>
+        <li> Routing traffic between ruby processes sucked</li>
     </ul>
+    <br></Br>
+    <br>
+    <p> |Note to self| - hide from the ruby fan boys</p>
 </section>
 
 <section>
-    <h2> Some of the software <br> development pain points </h2>
+    <h2> Dev pain points </h2>
     <ul>
-        <li> The App code base was huge: 1000 Models and Controllers, 200K lines of code, 100s of jobs </li>
-        <li> Dozens of engineers committing to the same code base without clear ownership </li>
-        <li> Difficult deployments, due to long test/integration cycles </li>
+        <li> 1000 Models and Controllers, 200K lines of code, 100s of jobs </li>
+        <li> Lots of contributors + no ownership </li>
+        <li> Difficult deployments with long test/integration cycles </li>
     </ul>
 </section>
 
@@ -163,7 +161,7 @@
 <!-- Lets fix the problem phase -->
 
 <section>
-    <h2> Then Three Things Happened </h2>
+    <h2> Three Things Happened </h2>
     <ul>
         <li> Started the transition to the JVM </li>
         <li> Macro-Service Era Started </li>
@@ -180,15 +178,19 @@
          <li> Better GC </li>
      </ul>
 </section>
+<!---
 <section>
-    <h2> Jruby and Java </h2> </br>
-    <h3> Java sticked - <br> Passionate developer with better POC (JSP) </h3>
+    <h2> Jruby vs Java </h2> </br>
+    <h3> Java Won <br> Passionate developer with better POC </h3>
+<aside class="notes">
+    JSP VS ERB
+</aside>
 </section>
+     -->
 
 <section>
-    <h2> Macro Architecture - about 10 Services </h2>
-    Started to have layers of caching and hierarchy between services <br>
-    <img width="520" height="520" src="img/onion.jpg">
+    <h2> First 10 Services </h2>
+    <img src="img/onion.jpg">
 </section>
 
 <section>
@@ -196,45 +198,46 @@
 </section>
 
 <section>
-    <h3> Things started to look better - <br> we solved 90% of our arch scaling problem</h3>
+    <h3> We solved 90% of our arch scaling problem</h3>
+    <h3> But not the Dev points </h3>
+    <br>
 </section>
 
 <section>
-    <h2> But we haven't solved <br>the software development and/or <br> improved the developers productivity </h2>
-    <br>
-    <h3>These problems are much harder than scaling the services</h3>
+    <h2> Pain points </h2>
+    <ul>
+        <li style="text-decoration: line-through"> Spike required to launch 1,000s of ruby processes </li>
+        <li style="text-decoration: line-through"> Postgres was overloaded </li>
+        <li style="text-decoration: line-through"> Routing traffic between ruby processes sucked</li>
+        <li> 1000 Models and Controllers, 200K lines of code, 100s of jobs </li>
+        <li> Lots of contributors + no ownership </li>
+        <li> Difficult deployments with long test/integration cycles </li>
+    </ul>
 </section>
 
 <section>
-    <h2> Micro services and <br> LOSA (lots of small apps)<br> started to get traction</h2>
+    <h2> Micro Service Architecture started to get more traction</h2>
     <br>
-    <h3> and in the meantime we began the transition to scala and play </h3>
-    <h4> Passionate developers <br> with convincing proof of concept </h4>
-
+    <h3> And we began the transition to scala and play </h3>
 </section>
 
 <section>
     <h2> As of last week we have more than <br> 450 services </h2>
     <img src="img/service_count.png">
-
-
 </section>
 
 <section>
-    <h2> Why MSA is good for us? </h2>
+    <h2> LOSA - Lots Of Small Apps </h2>
+    <h3> Same motivation and benefits of MSA </h3>
+</section>
+
+<section>
+    <h2> Why Micro-Service Architecture is good for us? </h2>
     <ul>
-        <li> Empower teams to move fast </li>
-        <li> Makes the problem smaller => Debugging easier / chances to understand all the code </li>
-        <li> Deployments only effect small part of the environment - easy to rollback </li>
-        <li> Somewhat clear ownership </li>
-        <li> The services have no state, no persistence </li>
+        <li> Empower team ownership </li>
+        <li> Smaller scope</li>
+        <li> Easier Deployments/Rollbacks</li>
     </ul>
-</section>
-
-<section>
-        <h2>LOSA - Lots Of Small Apps </h2>
-        <h3> Same motivation and benefits of micro-services </h3>
-        <h3> But it generated many challenges on keeping the Apps in sync and for Selenium Testing </h3>
 </section>
 
 <section>
@@ -242,19 +245,17 @@
 </section>
 
 <section>
-    <h2> And new problems started to arise:</h2>
+    <h2> New challenges</h2>
     <ul>
         <li> Dev/Integration Environments </li>
-        <li> Ownership </li>
-        <li> Data Management </li>
-        <li> Deployments </li>
-        <li> Hard to monitor </li>
-        <li> (Functional) Testing is even harder </li>
+        <li> Who owns this service!? </li>
+        <li> Monitoring </li>
+        <li> Deployments and Testing (Functional/Integration) </li>
     </ul>
 </section>
 
 <section data-background="#3C7DC4">
-    <h2> Dev / Testing Environment </h2>
+    <h2> On Dev/Integration Environments </h2>
     <ul>
         <li> The hardware is not strong enough </li>
         <li> No one wants to compile 20 services </li>
@@ -263,7 +264,7 @@
 </section>
 
 <section>
-    <h2> Each team has a staging ENV <br> for testing and development </h2>
+    <h2> Each team has a staging ENV </h2>
               <pre><code data-trim contenteditable>
                   SERVICE_PORTS=[
                   4001, #listing-service
@@ -291,25 +292,47 @@
 <section>
        <h2>Worked fine for a while but: </h2>
     <ul>
-        <li> It is hard to keep all the services up to date </li>
-        <li> In some cases we have maxed our staging env capacities </li>
-        <li> It requires to have internet connection in order to <br>
-            work on some of the services (e.g LOSA-apps)</li>
+        <li> Hard to keep all the services up to date </li>
+        <li> Maxed our staging env capacities </li>
+        <li> Requires to have internet connection for some of the services (e.g LOSA-apps)</li>
     </ul>
 </section>
 
 <section>
-    <h2> Moving to Pods/Docker </h2>
+    <h3> The Future</h3>
     <img src="img/Docker.png"/>
-
 </section>
 
-<section>
-    <h2> Data Management </h2>   <br>
-    <h3> We need to find a way to reduce the schema <br> complexity from our monolith DB and distribute ownership </h3>
+<section data-background="#5A8F29">
+    <h2>On Ownership </h2>
     <br>
-    <h3> It is possible to move the majority of the complexity of the service (e.g caching, fault-tolerance, scalability) to the data stores </h3>
+    <q> "code stays much longer than people" - SB</q>
 </section>
+<section>
+    <h3> Current approach </h3>
+    <ul>
+        <li>Team owns services not individual developers</li>
+        <li>Code Review - empower to commit to other repos</li>
+        <li>Ownership transfer</li>
+    </ul>
+</section>
+<section>
+    <img src="img/openGrok.png">
+    <img src="img/gerrit1.png">
+</section>
+<section>
+    <img src="img/gerrit2.png">
+</section>
+<section>
+    <img src="img/gerrit3.png">
+    <aside class="notes">
+        - Gerrit is open-source
+        - Code reviews are handled per commit / optional
+        - Great history + clear approval process
+        - Easy integration with jenkins
+    </aside>
+</section>
+
 <section>
     <h2> We transitioned to Micro-DBS -> <br> Third of the services have their own <br><br>MongoDB
         <br><br>Postgres <br><br> Voldemort </h2>
@@ -321,7 +344,7 @@
 <section>
     <h2> Principles of <br> Schema Evolution Manager </h2>
     <ul>
-        <li> We manage the schema evolutions in a Git repo </li>
+        <li> You can manage the schema evolutions in a Git repo </li>
         <li> Schema changes are deployed as tar flies </li>
         <li> No rollbacks</li>
         <li> Schema changes are required to be incremental. </li>
@@ -338,8 +361,44 @@
             </code> </pre>
 </section>
 
+<section data-background="#3C7DC4">
+    <h2> On Monitoring</h2>
+    <h3> Lets do a real example</h3>
+</section>
 
+<section>
+    <img src="img/hopper.jpg"/>
+</section>
 
+<section data-background="#5A8F29">
+  <h2> On Deployments <br>and Testing (Functional/Integration) </h2>
+    <q> "Testing is HARD" - the dev that sits on your left</q>
+</section>
+<section>
+    <h2> The challenges that we faced: </h2>
+        <ul>
+            <li> Hard to execute functional tests between the services</li>
+            <li> Frustrating to deploy semi-manually (Capistrano)</li>
+            <li> Scary to deploy other teams services</li>
+        </ul>
+</section>
+
+<section>
+        <h2> Ion-Cannon + SBT </h2>
+        <ul>
+            <li>Run functional/Selenium test on dedicated integration Env </li>
+            <li>Supports Canary releases</li>
+            <li>Easy rollbacks</li>
+            <li>Integrated health checks</li>
+        </ul>
+</section>
+<section>
+   <img src="img/ion-cannon.png"/>
+</section>
+
+<section>
+    <h2> Demo Time </h2>
+</section>
 
 
 <!-- Summary-->
@@ -348,18 +407,14 @@
     <h2> Main Takeaways </h2>
     <ul>
         <li>MicroServices promise works for most cases </li>
-        <li> IMHO the golden path is between Macro and Micro architecture</li>
-        <li>Simplicity - Do you really need it? transition periods are though and time consuming </li>
-        <li>As of 01/2014 - There are dataStore solutions that will make your service simple,
-            but uou will need to invest in Tools!</li>
-        <li>Better ownership </li>
+        <li>Simplicity - Do you really need it?</li>
+        <li>As of 2014 - You will need to invest in Tools!</li>
     </ul>
 </section>
 
 <section>
     END!
 </section>
-
 
 <section>
     <h1> Scala Break </h1>
@@ -396,7 +451,6 @@
     </ul>
 </section>
 
-
 <section>
     <h1> Communication between services </h1>
 </section>
@@ -408,7 +462,6 @@
         <li> Considering Thrift / Scrooge </li>
     </ul>
 </section>
-
 
 <script src="lib/js/head.min.js"></script>
 <script src="js/reveal.min.js"></script>
