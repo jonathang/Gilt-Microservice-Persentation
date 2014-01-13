@@ -4,9 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>GliT - From Monolith Ruby app to multi-tier Scala service architecture </title>
-
-    <meta name="description" content="A framework for creating beautiful presentations using HTML">
+    <title>Gilt - From Monolith Ruby app to MicroService Scala service architecture </title>
     <meta name="author" content="Jonathan Goldberg">
 
     <meta name="apple-moblie-web-app-capable" content="yes" />
@@ -31,25 +29,25 @@
 </head>
 
 <body>
-
+<!---#FF8F00 #5A8F29 #3C7DC4 -->
 <div class="reveal">
 
 <div class="slides">
 <section>
-    <h1> Scaling GliT </h1><br>
+    <h1> Scaling GILT </h1><br>
 
     <h2> From Monolith Ruby App <br><br> to <br><br> Distributed Scala Micro-Services</h2>
     <br>
     <p>
         <small><a href="http://yonigoldberg.com">Yoni (Jonathan) Goldberg</a> </small><br>
-        <small>Lead Engineer - Glit </small>
+        <small>Lead Engineer - GILT </small>
     </p>
 </section>
 <!--about me -->
 <section>
+    <h2>About Me</h2>
     <p>
-        - Current Project: <br>Sale Personalization <br> <br>
-        - Past Projects: <br>Loyalty, SEO, <br> Post Purchase Login/Registration flows <br><br>
+        - Sale Personalization, Loyalty, SEO <br> Post-purchase, Login/Registration flows <br><br>
         - MIT CS BS/Meng | Google | IBM | IDF <br><br>
         - Brooklyn | Coffee | Arduino | Running | Kite Surfing | Online Collaboration | Poker  <br>
         <br>
@@ -59,36 +57,42 @@
 
 <!-- Takeaways -->
 <section>
-         <h2>Some of the lessons and challanges that we stlil face with
-             micro-service <br> architecture at Glit <br><br>
+         <h2>Some of the lessons and challenges that we stlil face with
+             micro-service <br> architecture at GILT <br><br>
              And how we use Scala to solve some of this issues
              </h2>
 
     <aside class="notes">
         This talk is just one example of a journey, there are plenty of other ways to solve the same
-        issues but I hope that you wlil get something out of it
+        issues but I hope that you will get something out of it
     </aside>
 </section>
 <section>
     <img width="480" height="360" src="img/shit.jpeg">
 </section>
 
-<!-- Glit's history -->
+<!-- GILT's history -->
 
-<section>
-    <h2> What is Glit? </h2>
+<section data-background="#FF8F00">
+    <h2> What is GILT? </h2>
 
     Flash Sales Business <br>
     Founded in 2007<br>
-    Top 50 Internet-Retalier</br>
+    Top 50 Internet-Retailer</br>
     $750Mli in revenue </br>
     18Mli members </br>
     //TODO numbers from black Friday
 
 </section>
 <section>
-<img width="480" height="360" src="img/glit.png">
+<img width="480" height="360" src="img/gilt.png"/>
 </section>
+<section>
+    <h2> Another way to look at Gilt</h2>
+    <img src="img/spikes.png"/>
+    <h3> Three day traffic pattern</h3>
+</section>
+
 
 <section>
     <h1> The Classic Startup Story </h1>
@@ -197,6 +201,8 @@
 
 <section>
     <h2> But we haven't solved <br>the software development and/or <br> improved the developers productivity </h2>
+    <br>
+    <h3>These problems are much harder than scaling the services</h3>
 </section>
 
 <section>
@@ -218,7 +224,7 @@
     <h2> Why MSA is good for us? </h2>
     <ul>
         <li> Empower teams to move fast </li>
-        <li> Makes the problem smaller => Debugging easier </li>
+        <li> Makes the problem smaller => Debugging easier / chances to understand all the code </li>
         <li> Deployments only effect small part of the environment - easy to rollback </li>
         <li> Somewhat clear ownership </li>
         <li> The services have no state, no persistence </li>
@@ -239,17 +245,16 @@
     <h2> And new problems started to arise:</h2>
     <ul>
         <li> Dev/Integration Environments </li>
+        <li> Ownership </li>
         <li> Data Management </li>
         <li> Deployments </li>
-        <li> Communication between services </li>
         <li> Hard to monitor </li>
-        <li> Hard to collaborate and push changes to different services </li>
         <li> (Functional) Testing is even harder </li>
     </ul>
 </section>
 
-<section>
-    <h1> Dev / Testing Environment </h1>
+<section data-background="#3C7DC4">
+    <h2> Dev / Testing Environment </h2>
     <ul>
         <li> The hardware is not strong enough </li>
         <li> No one wants to compile 20 services </li>
@@ -299,11 +304,11 @@
 
 </section>
 
-
-
 <section>
     <h2> Data Management </h2>   <br>
     <h3> We need to find a way to reduce the schema <br> complexity from our monolith DB and distribute ownership </h3>
+    <br>
+    <h3> It is possible to move the majority of the complexity of the service (e.g caching, fault-tolerance, scalability) to the data stores </h3>
 </section>
 <section>
     <h2> We transitioned to Micro-DBS -> <br> Third of the services have their own <br><br>MongoDB
@@ -311,12 +316,12 @@
 </section>
 <section>
     <h2> Manage Micro-Relational DBs <br> Schema Evolution Manager </h2>
-    <a href="https://github.com/glit/schema-evolution-manager">https://github.com/glit/schema-evolution-manager </a>
+    <a href="https://github.com/gilt/schema-evolution-manager">https://github.com/gilt/schema-evolution-manager </a>
 </section>
 <section>
-    <h2> Principles</h2>
+    <h2> Principles of <br> Schema Evolution Manager </h2>
     <ul>
-        <li> We manage the schema evolutions as proper source code - Git repo </li>
+        <li> We manage the schema evolutions in a Git repo </li>
         <li> Schema changes are deployed as tar flies </li>
         <li> No rollbacks</li>
         <li> Schema changes are required to be incremental. </li>
@@ -334,24 +339,6 @@
 </section>
 
 
-<section>
-    <h1> Communication between services </h1>
-</section>
-<section>
-    //TODO Add a diagram of how services communicates between each other <br>
-    // Rabbit / Kafka / (mention Leader/Election)
-    <ul>
-        <li> We use Http/Json - leads </li>
-        <li> Considering Thrift / Scrooge </li>
-    </ul>
-</section>
-
-
-<section>
-
-
-
-</section>
 
 
 
@@ -360,10 +347,12 @@
 
     <h2> Main Takeaways </h2>
     <ul>
-        <li> Do you really need it?</li>
-        <li> As of 01/2014 - You will need to invest in Tools!</li>
-        <li> Ownership </li>
-        <li> Fast experiments and iterate when needed </li>
+        <li>MicroServices promise works for most cases </li>
+        <li> IMHO the golden path is between Macro and Micro architecture</li>
+        <li>Simplicity - Do you really need it? transition periods are though and time consuming </li>
+        <li>As of 01/2014 - There are dataStore solutions that will make your service simple,
+            but uou will need to invest in Tools!</li>
+        <li>Better ownership </li>
     </ul>
 </section>
 
@@ -406,6 +395,20 @@
         <li> Can be tricky to integrate with Java code </li>
     </ul>
 </section>
+
+
+<section>
+    <h1> Communication between services </h1>
+</section>
+<section>
+    //TODO Add a diagram of how services communicates between each other <br>
+    // Rabbit / Kafka / (mention Leader/Election)
+    <ul>
+        <li> We use Http/Json - leads </li>
+        <li> Considering Thrift / Scrooge </li>
+    </ul>
+</section>
+
 
 <script src="lib/js/head.min.js"></script>
 <script src="js/reveal.min.js"></script>
