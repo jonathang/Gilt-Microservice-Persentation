@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>GliT - From Monolith Ruby app to multi-tier Scala service architecture </title>
+
+    <meta name="description" content="A framework for creating beautiful presentations using HTML">
+    <meta name="author" content="Jonathan Goldberg">
+
+    <meta name="apple-moblie-web-app-capable" content="yes" />
+    <meta name="apple-moblie-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+        document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+<div class="slides">
+<section>
+    <h1> Scaling GliT </h1><br>
+
+    <h2> From Monolith Ruby App <br><br> to <br><br> Distributed Scala Micro-Services</h2>
+    <br>
+    <p>
+        <small><a href="http://yonigoldberg.com">Yoni (Jonathan) Goldberg</a> </small><br>
+        <small>Lead Engineer - Glit </small>
+    </p>
+</section>
+<!--about me -->
+<section>
+    <p>
+        - Current Project: <br>Sale Personalization <br> <br>
+        - Past Projects: <br>Loyalty, SEO, <br> Post Purchase Login/Registration flows <br><br>
+        - MIT CS BS/Meng | Google | IBM | IDF <br><br>
+        - Brooklyn | Coffee | Arduino | Running | Kite Surfing | Online Collaboration | Poker  <br>
+        <br>
+    </p>
+        <h3> Excited to be part of the NYC Tech community </h3>
+</section>
+
+<!-- Takeaways -->
+<section>
+         <h2>Some of the lessons and challanges that we stlil face with
+             micro-service <br> architecture at Glit <br><br>
+             And how we use Scala to solve some of this issues
+             </h2>
+
+    <aside class="notes">
+        This talk is just one example of a journey, there are plenty of other ways to solve the same
+        issues but I hope that you wlil get something out of it
+    </aside>
+</section>
+<section>
+    <img width="480" height="360" src="img/shit.jpeg">
+</section>
+
+<!-- Glit's history -->
+
+<section>
+    <h2> What is Glit? </h2>
+
+    Flash Sales Business <br>
+    Founded in 2007<br>
+    Top 50 Internet-Retalier</br>
+    $750Mli in revenue </br>
+    18Mli members </br>
+    //TODO numbers from black Friday
+
+</section>
+<section>
+<img width="480" height="360" src="img/glit.png">
+</section>
+
+<section>
+    <h1> The Classic Startup Story </h1>
+</section>
+
+<section>
+    <h2>The early days</h2>
+    // Get a picture of phong/mike - hacking
+
+    <p> 2007 - Ruby on Ralis the hottest new thing </p>
+    <br>
+    <p> The goal was to get fast to market </p>
+
+    <aside class="notes">
+        - Ralis the hottest new thing around
+        - Simple admin/customer facing site
+        - Classic startup - Everyone is doing everything - Shipping
+    </aside>
+</section>
+<section>
+    <h2> 2009 Architecture</h2>
+    <img width="480" height="360" src="img/monolith.jpg">
+</section>
+<section>
+    <h2> We were able to handle our traffic pretty well</h2>
+    <img width="512" height="394" src="img/spike.jpg">
+</section>
+
+<section>
+    <h2>Things went well, traffic kept rising </h2>
+    <h2> And it was relatively simple to develop and move fast <br> while rendering the pages in real-time </h2>
+</section>
+
+<section>
+    <h2> Untli after about two years, it didn't  </h2>
+    <img width="300" height="200" src="img/louboutin.jpg">
+    <img width="200" height="200" src="img/louboutin2.jpg">
+</section>
+
+<section>
+    <h2> Some of the technology pain points <br> (As of 2009) </h2>
+    <ul>
+        <li> The amount of traffic at the spike required us to launch 1,000s of ruby processes </li>
+        <li> Postgres was overloaded </li>
+        <li> Routing traffic between ruby processes is hard and was not efficiently solved then </li>
+        <li> Ruby 1.8.* - doesn't really support multi-threading, and the GC was not optimized </li>
+    </ul>
+</section>
+
+<section>
+    <h2> Some of the software <br> development pain points </h2>
+    <ul>
+        <li> The App code base was huge: 1000 Models and Controllers, 200K lines of code, 100s of jobs </li>
+        <li> Dozens of engineers committing to the same code base without clear ownership </li>
+        <li> Difficult deployments, due to long test/integration cycles </li>
+    </ul>
+</section>
+
+<section>
+    <h2> We needed to solve the problem fast </h2>
+    <img width="466" height="420" src="img/money.jpg">
+    <aside class="notes">
+        - Invested money
+        - Money we lost, shitty customer experience
+    </aside>
+</section>
+
+<!-- Lets fix the problem phase -->
+
+<section>
+    <h2> Then Three Things Happened </h2>
+    <ul>
+        <li> Started the transition to the JVM </li>
+        <li> Macro-Service Era Started </li>
+        <li> Dedicated data stores </li>
+    </ul>
+</section>
+
+<section>
+   <h2> Why the JVM? </h2>
+     <ul>
+         <li> Widely adapted</li>
+         <li> Proven to be more stable</li>
+         <li> Better support for concurrency </li>
+         <li> Better GC </li>
+     </ul>
+</section>
+<section>
+    <h2> Jruby and Java </h2> </br>
+    <h3> Java sticked - <br> Passionate developer with better POC (JSP) </h3>
+</section>
+
+<section>
+    <h2> Macro Architecture - about 10 Services </h2>
+    Started to have layers of caching and hierarchy between services <br>
+    <img width="520" height="520" src="img/onion.jpg">
+</section>
+
+<section>
+    <img src="img/Macro.png">
+</section>
+
+<section>
+    <h3> Things started to look better - <br> we solved 90% of our arch scaling problem</h3>
+</section>
+
+<section>
+    <h2> But we haven't solved <br>the software development and/or <br> improved the developers productivity </h2>
+</section>
+
+<section>
+    <h2> Micro services and <br> LOSA (lots of small apps)<br> started to get traction</h2>
+    <br>
+    <h3> and in the meantime we began the transition to scala and play </h3>
+    <h4> Passionate developers <br> with convincing proof of concept </h4>
+
+</section>
+
+<section>
+    <h2> As of last week we have more than <br> 450 services </h2>
+    <img src="img/service_count.png">
+
+
+</section>
+
+<section>
+    <h2> Why MSA is good for us? </h2>
+    <ul>
+        <li> Empower teams to move fast </li>
+        <li> Makes the problem smaller => Debugging easier </li>
+        <li> Deployments only effect small part of the environment - easy to rollback </li>
+        <li> Somewhat clear ownership </li>
+        <li> The services have no state, no persistence </li>
+    </ul>
+</section>
+
+<section>
+        <h2>LOSA - Lots Of Small Apps </h2>
+        <h3> Same motivation and benefits of micro-services </h3>
+        <h3> But it generated many challenges on keeping the Apps in sync and for Selenium Testing </h3>
+</section>
+
+<section>
+    <img src="img/Now.jpg">
+</section>
+
+<section>
+    <h2> And new problems started to arise:</h2>
+    <ul>
+        <li> Dev/Integration Environments </li>
+        <li> Data Management </li>
+        <li> Deployments </li>
+        <li> Communication between services </li>
+        <li> Hard to monitor </li>
+        <li> Hard to collaborate and push changes to different services </li>
+        <li> (Functional) Testing is even harder </li>
+    </ul>
+</section>
+
+<section>
+    <h1> Dev / Testing Environment </h1>
+    <ul>
+        <li> The hardware is not strong enough </li>
+        <li> No one wants to compile 20 services </li>
+    </ul>
+    <img width="500" height="300" src="img/macbook.jpg">
+</section>
+
+<section>
+    <h2> Each team has a staging ENV <br> for testing and development </h2>
+              <pre><code data-trim contenteditable>
+                  SERVICE_PORTS=[
+                  4001, #listing-service
+                  8235, #svc-user-set
+                  9420, #svc-free-fall
+                  7895, #svc-Loyalty
+                  8155, #web-loyalty
+                  9410, #web inventory status
+                  7898, #admin-loylaty
+                  7899, #notification
+                  7102, #rouge
+                  9530, #svc-componenet
+                  6802, #svc-waitlist-submit
+                  4066, #svc-action-sale
+                  ....
+
+                  PORT_FORWARD_ARGS=SERVICE_PORTS.map { |port|
+                  ['-L', "#{port}:localhost:#{port}"]
+                  }
+
+                  exec(*[%w{ssh -a -C -N -n}, PORT_FORWARD_ARGS, GW_HOST].flatten)
+
+              </code></pre>
+</section>
+<section>
+       <h2>Worked fine for a while but: </h2>
+    <ul>
+        <li> It is hard to keep all the services up to date </li>
+        <li> In some cases we have maxed our staging env capacities </li>
+        <li> It requires to have internet connection in order to <br>
+            work on some of the services (e.g LOSA-apps)</li>
+    </ul>
+</section>
+
+<section>
+    <h2> Moving to Pods/Docker </h2>
+    <img src="img/Docker.png"/>
+
+</section>
+
+
+
+<section>
+    <h2> Data Management </h2>   <br>
+    <h3> We need to find a way to reduce the schema <br> complexity from our monolith DB and distribute ownership </h3>
+</section>
+<section>
+    <h2> We transitioned to Micro-DBS -> <br> Third of the services have their own <br><br>MongoDB
+        <br><br>Postgres <br><br> Voldemort </h2>
+</section>
+<section>
+    <h2> Manage Micro-Relational DBs <br> Schema Evolution Manager </h2>
+    <a href="https://github.com/glit/schema-evolution-manager">https://github.com/glit/schema-evolution-manager </a>
+</section>
+<section>
+    <h2> Principles</h2>
+    <ul>
+        <li> We manage the schema evolutions as proper source code - Git repo </li>
+        <li> Schema changes are deployed as tar flies </li>
+        <li> No rollbacks</li>
+        <li> Schema changes are required to be incremental. </li>
+    </ul>
+</section>
+<section>
+            <pre><code data-trim contenteditable>
+                echo "create table releases (id integer)" > new.sql
+                sem-add ./new.sql #Created a git commit
+                sem-dist # generates the tar e.g schema-ion-cannon0.0.2.tar.gz
+                # Scp and untar on your server
+                cd schema-ion-cannon-0.0.2
+                sem-apply host --localhost --name ion-cannon --user ion-cannon-usr
+            </code> </pre>
+</section>
+
+
+<section>
+    <h1> Communication between services </h1>
+</section>
+<section>
+    //TODO Add a diagram of how services communicates between each other <br>
+    // Rabbit / Kafka / (mention Leader/Election)
+    <ul>
+        <li> We use Http/Json - leads </li>
+        <li> Considering Thrift / Scrooge </li>
+    </ul>
+</section>
+
+
+<section>
+
+
+
+</section>
+
+
+
+<!-- Summary-->
+<section>
+
+    <h2> Main Takeaways </h2>
+    <ul>
+        <li> Do you really need it?</li>
+        <li> As of 01/2014 - You will need to invest in Tools!</li>
+        <li> Ownership </li>
+        <li> Fast experiments and iterate when needed </li>
+    </ul>
+</section>
+
+<section>
+    END!
+</section>
+
+
+<section>
+    <h1> Scala Break </h1>
+</section>
+
+<section>
+    <h2> Why to switch to Scala from Java </h2>
+    <ul>
+        <li> Object-Functional Programming </li>
+        <li> Immutability that leads to easier concurrency </li>
+        <li> Great libraries: like Salat, Scalaz</li>
+        <li> Less boilerplate code - e.g Case classes, App</li>
+        <li> Scala's Collections </li>
+        <li> Traits </li>
+        <li> Cake Pattern </li>
+        <li> Console </li>
+        <li> SBT (in scala, release process)</li>
+        <li> Akka </li>
+        <li> No Nulls by default </li>
+
+    </ul>
+</section>
+
+<section>
+    <h2> Why Not to switch to Scala from Java </h2>
+    <ul>
+        <li> Learning Curve</li>
+        <li> SBT is not that simple </li>
+        <li> Harder debugging in some cases </li>
+        <li> Still early - version upgrades </li>
+        <li> It allows many styles of coding - We are still in the progress of  </li>
+        <li> A lot of hard to read methods like: ":+", "++"  </li>
+        <li> Can be tricky to integrate with Java code </li>
+    </ul>
+</section>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options avaliable here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // avaliable themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+</script>
+
+</body>
+</html>
