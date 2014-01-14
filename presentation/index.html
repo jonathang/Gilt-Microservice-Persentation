@@ -18,6 +18,7 @@
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
 
+
     <!-- If the query includes 'print-pdf', use the PDF print sheet -->
     <script>
         document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
@@ -36,17 +37,20 @@
 <section>
     <h1> Scaling GILT </h1><br>
 
-    <h2> From Monolith Ruby App <br><br> to <br><br> Distributed Scala Micro-Services</h2>
+    <h3> From Monolith Ruby App <br><br> to <br><br> Distributed Scala Micro-Services</h3>
     <br>
+    <h4> #NYCTechTalks </h4>
     <p>
         <small><a href="http://yonigoldberg.com">Yoni (Jonathan) Goldberg</a> </small><br>
-        <small>Lead Engineer - GILT </small>
+        <small>Lead Engineer - GILT </small> <br>
+        <small> Podium => http://bit.ly/podiumapp </small>
     </p>
 </section>
 <!--about me -->
 <section>
     <h2>About Me</h2>
     <p>
+        - Leading the Popeye Team <br>
         - Sale Personalization, Loyalty, SEO <br> Post-purchase, Login/Registration flows <br><br>
         - MIT CS BS/Meng | Google | IBM | IDF <br><br>
         - Brooklyn | Coffee | Arduino | Running | Kite Surfing | Online Collaboration | Poker  <br>
@@ -57,10 +61,9 @@
 
 <!-- Takeaways -->
 <section>
-         <h2>The lessons and challenges with<br>
-             micro-service  architecture <br> @ GILT <br><br>
-             </h2>
-
+         <h2>The lessons and challenges that we had/have with<br>
+             micro-service architecture
+         </h2>
     <aside class="notes">
         This talk is just one example of a journey, there are plenty of other ways to solve the same
         issues but I hope that you will get something out of it
@@ -78,9 +81,7 @@
     Flash Sales Business <br>
     Founded in 2007<br>
     Top 50 Internet-Retailer</br>
-    $750Mil in revenue </br>
-    18Mil members </br>
-    //TODO numbers from black Friday
+    ~150 Engineers </br>
 
 </section>
 <section>
@@ -99,11 +100,10 @@
 
 <section>
     <h2>The early days</h2>
-    // Get a picture of phong/mike - hacking
 
-    <p> 2007 - Ruby on Ralis the hottest new thing </p>
+    <p> 2007 - Ruby on Rails the hottest new thing </p>
     <br>
-    <p> The goal was to get fast to market </p>
+    <p> The goal was to get to market fast </p>
 
     <aside class="notes">
         - Ralis the hottest new thing around
@@ -135,7 +135,7 @@
         <li> Postgres was overloaded </li>
         <li> Routing traffic between ruby processes sucked</li>
     </ul>
-    <br></Br>
+    <br>
     <br>
     <p> |Note to self| - hide from the ruby fan boys</p>
 </section>
@@ -143,14 +143,15 @@
 <section>
     <h2> Dev pain points </h2>
     <ul>
-        <li> 1000 Models and Controllers, 200K lines of code, 100s of jobs </li>
+        <li> 1000 Models/Controllers, 200K LOC, 100s of jobs </li>
         <li> Lots of contributors + no ownership </li>
-        <li> Difficult deployments with long test/integration cycles </li>
+        <li> Difficult deployments with long integration cycles </li>
+        <li> Hard to identify root causes</li>
     </ul>
 </section>
 
 <section>
-    <h2> We needed to solve the problem fast </h2>
+    <h2> We needed to solve<br> the problem fast </h2>
     <img width="466" height="420" src="img/money.jpg">
     <aside class="notes">
         - Invested money
@@ -164,7 +165,7 @@
     <h2> Three Things Happened </h2>
     <ul>
         <li> Started the transition to the JVM </li>
-        <li> Macro-Service Era Started </li>
+        <li> M(a/i)cro-Service Era Started </li>
         <li> Dedicated data stores </li>
     </ul>
 </section>
@@ -172,10 +173,10 @@
 <section>
    <h2> Why the JVM? </h2>
      <ul>
-         <li> Widely adapted</li>
-         <li> Proven to be more stable</li>
+         <li> Widely adopted</li>
+         <li> Stable</li>
          <li> Better support for concurrency </li>
-         <li> Better GC </li>
+         <li> Better GC vs MRI</li>
      </ul>
 </section>
 <!---
@@ -194,7 +195,7 @@
 </section>
 
 <section>
-    <img src="img/Macro.png">
+    <img src="img/Macro.jpg">
 </section>
 
 <section>
@@ -209,16 +210,25 @@
         <li style="text-decoration: line-through"> Spike required to launch 1,000s of ruby processes </li>
         <li style="text-decoration: line-through"> Postgres was overloaded </li>
         <li style="text-decoration: line-through"> Routing traffic between ruby processes sucked</li>
-        <li> 1000 Models and Controllers, 200K lines of code, 100s of jobs </li>
+        <li> New services became semi-monolithic </li>
+        <li> 1000 Models/Controllers, 200K LOC, 100s of jobs  </li>
         <li> Lots of contributors + no ownership </li>
-        <li> Difficult deployments with long test/integration cycles </li>
+        <li> Difficult deployments with long integration cycles </li>
     </ul>
 </section>
 
 <section>
-    <h2> Micro Service Architecture started to get more traction</h2>
+    <h2> Why we doubled down on <br> Micro-Services </h2>
+    <ul>
+        <li> Empower teams and ownership </li>
+        <li> Smaller scope </li>
+        <li> Simpler and Easier deployments and rollbacks</li>
+    </ul>
+</section>
+
+<section>
+    <h2> Micro Service Architecture started to get traction</h2>
     <br>
-    <h3> And we began the transition to scala and play </h3>
 </section>
 
 <section>
@@ -227,17 +237,25 @@
 </section>
 
 <section>
-    <h2> LOSA - Lots Of Small Apps </h2>
-    <h3> Same motivation and benefits of MSA </h3>
+    <h2> App Bootstrap </h2>
+     <pre><code data-trim contenteditable>
+    rake bootstrap:admin-web           # Bootstrap a admin-web service
+    rake bootstrap:babylon-docs        # Bootstrap a babylon-docs service
+    rake bootstrap:client-server-core  # Bootstrap a client-server-core service
+    rake bootstrap:jersey-java         # Bootstrap a jersey-java service
+    rake bootstrap:jersey-scala        # Bootstrap a jersey-scala service
+    rake bootstrap:play                # Bootstrap a play service
+    rake bootstrap:play-ui-build       # Bootstrap a play-ui-build service
+    rake bootstrap:sbt-library         # Bootstrap a sbt-library service
+    rake bootstrap:schema              # Bootstrap a schema service
+    </code></pre>
 </section>
 
 <section>
-    <h2> Why Micro-Service Architecture is good for us? </h2>
-    <ul>
-        <li> Empower team ownership </li>
-        <li> Smaller scope</li>
-        <li> Easier Deployments/Rollbacks</li>
-    </ul>
+    <h2> We began the transition to scala and play </h3></h2>
+    <br>
+    <h3> LOSA - Lots Of Small Apps </h3>
+    <h3> Same motivation and benefits of Micro-Service-Architecture </h3>
 </section>
 
 <section>
@@ -290,7 +308,7 @@
               </code></pre>
 </section>
 <section>
-       <h2>Worked fine for a while but: </h2>
+       <h2>Staging Difficulties: </h2>
     <ul>
         <li> Hard to keep all the services up to date </li>
         <li> Maxed our staging env capacities </li>
@@ -303,25 +321,41 @@
     <img src="img/Docker.png"/>
 </section>
 
+<section>
+  <h2> Docker </h2>
+   <h3>
+     An extension to Linux Containers (LXC)
+   </h3>
+    <ul>
+        <li> Decentralization </li>
+        <li> Simple Configurations </li>
+        <li> Much lighter than a VM </li>
+        <li> Immutable </li>
+        <li> Supports services and platforms </li>
+    </ul>
+</section>
+
 <section data-background="#5A8F29">
     <h2>On Ownership </h2>
     <br>
     <q> "code stays much longer than people" - SB</q>
 </section>
+
 <section>
-    <h3> Current approach </h3>
+    <h2>Code Ownership </h2>
+</section>
+
+<section>
+    <h2> Current approach </h2>
     <ul>
-        <li>Team owns services not individual developers</li>
-        <li>Code Review - empower to commit to other repos</li>
+        <li>Code Review!Code Review!Code Review!</li>
+        <li>Team owns services, not individual developers</li>
         <li>Ownership transfer</li>
     </ul>
 </section>
 <section>
     <img src="img/openGrok.png">
     <img src="img/gerrit1.png">
-</section>
-<section>
-    <img src="img/gerrit2.png">
 </section>
 <section>
     <img src="img/gerrit3.png">
@@ -334,8 +368,14 @@
 </section>
 
 <section>
-    <h2> We transitioned to Micro-DBS -> <br> Third of the services have their own <br><br>MongoDB
-        <br><br>Postgres <br><br> Voldemort </h2>
+    <h2>Data Ownership</h2>
+</section>
+
+<section>
+    <h2> We transitioned to Micro-DBS -> <br> Third of the services have their own </h2>
+    <br><br>
+    <h3>MongoDB
+        <br><br>Postgres <br><br> Voldemort </h3>
 </section>
 <section>
     <h2> Manage Micro-Relational DBs <br> Schema Evolution Manager </h2>
@@ -363,12 +403,44 @@
 
 <section data-background="#3C7DC4">
     <h2> On Monitoring</h2>
-    <h3> Lets do a real example</h3>
+</section>
+
+<section>
+    <img src="img/boundary1.png"/>
+</section>
+
+<section>
+    <h2> The tools we use </h2>
+   <img height="220" width="185" src="img/newrelic.jpg"/>
+   <img src="img/boundary.jpeg"/>
+   <img src="img/metrics.jpeg"/>
+    <h3>graphite / openTSDB</h3>
 </section>
 
 <section>
     <img src="img/hopper.jpg"/>
 </section>
+
+<section>
+   <img src="img/exposure.png"/>
+</section>
+
+<section>
+    <div>
+    <img height="500" width="250" src="img/new1.png"/>
+    <img height="500" width="250" src="img/new2.png"/>
+        </div>
+</section>
+
+<section>
+    <img src="img/svc17.png"/>
+</section>
+
+<section>
+    <img src="img/old_solr.png"/>
+    <img src="img/current_solr.png"/>
+</section>
+
 
 <section data-background="#5A8F29">
   <h2> On Deployments <br>and Testing (Functional/Integration) </h2>
@@ -377,27 +449,59 @@
 <section>
     <h2> The challenges that we faced: </h2>
         <ul>
-            <li> Hard to execute functional tests between the services</li>
+            <li> Hard to execute functional tests between services</li>
             <li> Frustrating to deploy semi-manually (Capistrano)</li>
             <li> Scary to deploy other teams services</li>
         </ul>
 </section>
 
 <section>
+    <h2> SBT </h2>
+    <ul>
+        <li> Motivation: Scala adaption </li>
+        <li> Complex Scala syntax</li>
+        <li> Cool features: ~test, shell, console</li>
+        <li> Hard to debug </li>
+    </ul>
+
+</section>
+<section>
+    <h2>  GILT-SBT-BUILD</h2>
+    <ul>
+        <li> Simple config for all the services </li>
+
+        <li> Pulls many plugins: <br>
+        [nexus, testing, RPMs, run scripts, Monitoring, SemVer, ...] </li>
+
+        <li>Custom commands (e.g 'sbt release') </li>
+    </ul>
+</section>
+
+<section>
+    <pre><code data-trim contenteditable>
+        object Build extends ClientServerCoreProject with Dependencies {
+            val name = 'svc-sale-activation'
+            val coreDeps = ....
+            val serverDeps = ...
+            val clientDeps = ...
+
+          override val ioncannonTrack = IonCannon.FastTrack
+        }
+    </code></pre>
+</section>
+
+<section>
         <h2> Ion-Cannon + SBT </h2>
         <ul>
-            <li>Run functional/Selenium test on dedicated integration Env </li>
+            <li>Run functional/Selenium tests on dedicated Env </li>
             <li>Supports Canary releases</li>
             <li>Easy rollbacks</li>
             <li>Integrated health checks</li>
         </ul>
 </section>
-<section>
-   <img src="img/ion-cannon.png"/>
-</section>
 
 <section>
-    <h2> Demo Time </h2>
+   <img src="img/ion-cannon.png"/>
 </section>
 
 
@@ -406,10 +510,24 @@
 
     <h2> Main Takeaways </h2>
     <ul>
-        <li>MicroServices promise works for most cases </li>
         <li>Simplicity - Do you really need it?</li>
+        <li> We feel that it was the right choice for us</li>
+        <li>MicroServices promise works for most cases </li>
         <li>As of 2014 - You will need to invest in Tools!</li>
     </ul>
+</section>
+<section>
+            <h1> Podium Time</h1>
+                <br><br>
+            <p>
+                We are hiring...
+            </p>
+
+            Keep in touch: <br>
+            jgoldberg@gilt.com <br>
+            <a href=http://www.yonigoldberg.com> www.yonigoldberg.com </a>
+
+
 </section>
 
 <section>
@@ -448,18 +566,6 @@
         <li> It allows many styles of coding - We are still in the progress of  </li>
         <li> A lot of hard to read methods like: ":+", "++"  </li>
         <li> Can be tricky to integrate with Java code </li>
-    </ul>
-</section>
-
-<section>
-    <h1> Communication between services </h1>
-</section>
-<section>
-    //TODO Add a diagram of how services communicates between each other <br>
-    // Rabbit / Kafka / (mention Leader/Election)
-    <ul>
-        <li> We use Http/Json - leads </li>
-        <li> Considering Thrift / Scrooge </li>
     </ul>
 </section>
 
