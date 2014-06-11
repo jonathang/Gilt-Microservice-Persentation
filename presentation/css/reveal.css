@@ -256,7 +256,7 @@ body {
 .reveal ol,
 .reveal ul {
 	display: inline-block;
-
+	width: 960px;
 	text-align: left;
 	margin: 0 0 0 1em;
 }
@@ -1877,4 +1877,8 @@ body {
 	visibility: hidden;
 }
 
+
+#solved-pain-points {
+	width: 350px;
+}
 
