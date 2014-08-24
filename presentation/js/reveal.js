@@ -3,7 +3,7 @@
  * http://lab.hakim.se/reveal-js
  * MIT licensed
  *
- * Copyright (C) 2013 Hakim El Hattab, http://hakim.se
+ * Copyright (C) 2014 Hakim El Hattab, http://hakim.se
  */
 var Reveal = (function(){
 
@@ -20,7 +20,7 @@ var Reveal = (function(){
 			// The "normal" size of the presentation, aspect ratio will be preserved
 			// when the presentation is scaled to fit different resolutions
 			width: 960,
-			height: 540,
+			height: 700,
 
 			// Factor of the display size that should remain empty around the content
 			margin: 0.1,

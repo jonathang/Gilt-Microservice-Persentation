@@ -12,6 +12,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+    <!-- uncomment the following line and add ?print-pdf in order to save to a pdf -->
+    <!--<link rel="stylesheet" href="css/print/pdf.css"> -->
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/default.css" id="theme">
 
@@ -19,11 +21,16 @@
     <link rel="stylesheet" href="lib/css/zenburn.css">
 
 
-    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
-    <script>
-        document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-    </script>
-
+   <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
     <!--[if lt IE 9]>
     <script src="lib/js/html5shiv.js"></script>
     <![endif]-->
@@ -39,7 +46,7 @@
 
     <h3> From Monolith Ruby App to Distributed Scala Micro-Services</h3>
     <br>
-    <h3>QCon - Brooklyn - 2014</h3>
+    <h3> Atlassian Summit - San-Jose - 2014</h3>
 
         <h3> <a href="http://yonigoldberg.com"> Yoni (Jonathan) Goldberg</a></h3>
     </p>
@@ -55,6 +62,11 @@
 </section>
 
 <!-- Takeaways -->
+
+<section>
+    <img width="480" height="360" src="img/shit.jpeg">
+</section>
+
 <section>
          <h3>The lessons and challenges that we had/have with<br>
              micro-service architecture <!--, and whether Microservice is the right choice for you...-->
@@ -63,11 +75,6 @@
         This talk is just one example of a journey, there are plenty of other ways to solve the same
         issues but I hope that you will get something out of it
     </aside>
-</section>
-
-
-<section>
-    <img width="480" height="360" src="img/shit.jpeg">
 </section>
 
 <!-- GILT's history -->
@@ -219,16 +226,16 @@
 </section>
 
 <section>
+    <h3> As of last week we have around <br> 400 services in Prod</h3>
+    <img width="700" height="400" src="img/microservices _graph.jpg">
+</section>
+
+<section>
     <h3> We began the transition to Scala and Play </h3>
     <br>
     <h3> LOSA - Lots Of Small (Web) Apps </h3> <br>
     <p> Same as micro-services but for web-apps </p>
 
-</section>
-
-<section>
-    <h3> As of last week we have more than <br> 300 services in Prod</h3>
-    <img width="700" height="400" src="img/microservices _graph.jpg">
 </section>
 
 <section>
@@ -264,6 +271,7 @@
     </section>
 
 </section>
+
 <section>
     <h3> why the increase? </h3>
     <img width="700" height="400" src="img/microservices _graph.jpg">
@@ -435,7 +443,7 @@
 
 <section>
     <h2> The Future</h2>
-    <h3> Focus on minimizing dependencies </h3>
+    <h3> <a href="http://www.reactivemanifesto.org/"> GO Reactive </a> </h3>
     <img src="img/docker-logo.png"/>
     <img height="331px" width="250px" src="img/amazon.jpeg"/>
 </section>
@@ -497,7 +505,7 @@
 </section>
 <section>
     <h2> Principles of <br> Schema Evolution Manager </h2>
-    <ul style="width:1300px">
+    <ul>
         <li> Can manage the schema evolutions in a Git repo </li>
         <li> Schema changes are deployed as tar flies </li>
         <li> No rollbacks</li>
@@ -561,15 +569,13 @@
 
 <!-- Summary-->
 <section>
-  <h3> Cheat Sheet </h3>
-  <ul>
-        <li> Your organization has > 30 developers? </li>
-        <li> Deployments and integrations are difficult [You need a team for that]</li>
-        <li> You can abstractly separate features and parts of your site </li>
-        <li> Special hardware or performance needs for some features </li>
-    </ul>
+    <h1> Summary <h1>
+</section>
+<section>
+ <img height="600px" src="img/good-ugly.png"/>
 </section>
 
+<!--
 <section>
 
     <h2> Main Takeaways </h2>
@@ -580,6 +586,7 @@
         <li> We feel that it was the right choice for us </li>
     </ul>
 </section>
+-->
 
 <section>
     <h2> What's next ? </h2>
@@ -592,7 +599,7 @@
             <p>
                 We are hiring...
             </p>
-
+            @yoni_goldberg <br>
             jgoldberg@gilt.com <br>
             <a href=http://www.yonigoldberg.com> www.yonigoldberg.com </a>
 </section>
